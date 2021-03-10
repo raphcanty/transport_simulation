@@ -74,6 +74,7 @@
 		{"index": "3", "short": "Education", "desc": "Travelling to or from place of study"},
 		{"index": "4", "short": "Shopping", "desc": "Shopping or Personal Business"},
 		{"index": "5", "short": "Other", "desc": "Travelling for a purpose not captured here"},
+		{"index": "7", "short": "Mobility Hub", "desc": "Using Mobility Hub"},
 		{"index": "6", "short": "Not travelling", "desc": "Not travelling"},
 	]
 
@@ -113,7 +114,7 @@
 			foci[code.index] = {x: 250 * Math.cos(i * theta)+380, y: 250 * Math.sin(i * theta)+365 };
 		}
 	});
-
+	console.log(foci)
 
 	// Start the SVG
 	var svg = d3.select("#chart").append("svg")
@@ -126,31 +127,37 @@
 
 	// Load data and let's do it.
 	// RC: Using my data now
-	d3.tsv("transport_data_4am.tsv", function(error, data) {
+	var mycounter = 0;
+	d3.tsv("transport_data_mobhub.tsv", function(error, data) {
 
 		data.forEach(function(d) {
 			var day_array = d.day.split(",");
-			console.log(day_array);
 			var activities = [];
+			console.log(day_array);
 			for (var i=0; i < day_array.length; i++) {
 				// Duration
 				if (i % 3 == 2) {
 					activities.push({'duration': Number(day_array[i-2]), 'mode': day_array[i-1], 'purpose': +day_array[i]});
 				}
 			}
+			//console.log(mycounter)
+			//console.log(activities)
 			sched_objs.push(activities);
 		});
 
 		// Used for percentages by minute
-		var purpose_counts = { "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0};
+		var purpose_counts = { "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7":0};
 		var mode_counts = { "0": 0, "1": 0, "2": 0, "3": 0, "4": 0}; //, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0};
 
 		// A node for each person's schedule
 		var nodes = sched_objs.map(function(o,i) {
+			//mycounter = mycounter + 1;
+			//console.log(mycounter, o);
 			var purpose = o[0].purpose;
 			purpose_counts[purpose] += 1;
 			var mode = o[0].mode;
 			mode_counts[mode] += 1;
+			//console.log(purpose);
 			var init_x = foci[purpose].x + Math.random();
 			var init_y = foci[purpose].y + Math.random();
 			return {
