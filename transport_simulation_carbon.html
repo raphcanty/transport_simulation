@@ -119,7 +119,7 @@
 			foci[code.index] = center_pt;
 		} else {
 			var theta = 2 * Math.PI / (purpose_codes.length-1);
-			foci[code.index] = {x: 250 * Math.cos(i * theta)+380, y: 250 * Math.sin(i * theta)+365 };
+			foci[code.index] = {x: 180 * Math.cos(i * theta)+380, y: 180 * Math.sin(i * theta)+365 };
 		}
 	});
 
@@ -218,7 +218,7 @@
 						return center_pt.x;
 					} else {
 						var theta = 2 * Math.PI / (purpose_codes.length-1);
-						return 340 * Math.cos(i * theta)+380;
+						return 320 * Math.cos(i * theta)+380;
 					}
 
 				})
@@ -227,7 +227,7 @@
 						return center_pt.y;
 					} else {
 						var theta = 2 * Math.PI / (purpose_codes.length-1);
-						return 340 * Math.sin(i * theta)+365;
+						return 320 * Math.sin(i * theta)+365;
 					}
 
 				});
@@ -255,7 +255,7 @@
 				.attr("text-anchor", "middle")
 				.attr("class", "actcarpct")
 				.text(function(d) {
-					return readablePercent(carbon_by_purpose[d.index], total_carbon) + " carbon"
+					return readablePercent(carbon_by_purpose[d.index], total_carbon) + " total carbon"
 				});
 
 		var modeLabel = modeLegend.selectAll("text").data(mode_codes).enter().append("text").attr("class", "modelabel")
@@ -290,7 +290,7 @@
 				.attr("text-anchor", "middle")
 				.attr("class", "modecarpct")
 				.text(function(d) {
-					return readablePercent(carbon_by_mode[d.index], total_carbon) + " carbon"
+					return readablePercent(carbon_by_mode[d.index], total_carbon) + " total carbon"
 					//return mode_counts[d.index] + "%";
 				});
 
@@ -325,7 +325,7 @@
 		var carbonDots = carbonLegend.selectAll("circle").data(carbon_codes).enter().append("circle")
 				.attr("cx", function(d, i) {
 					return 50 + (40 * i)})
-				.attr("cy", 100)
+				.attr("cy", 110)
 				.attr("r", function(d) {return scale(d)}).style("fill", "#000000");
 
 		var carbon_codes2 = ["0", "0", "0.5", "1", "1.5", "2"];
@@ -399,7 +399,7 @@
 					});
 			label.selectAll("tspan.actcarpct")
 					.text(function(d) {
-						return readablePercent(carbon_by_purpose[d.index], total_carbon) + " carbon";
+						return readablePercent(carbon_by_purpose[d.index], total_carbon) + " total carbon";
 					});
 
 			// Update mode percentages
@@ -413,7 +413,7 @@
 					});
 			modeLabel.selectAll("tspan.modecarpct")
 					.text(function(d) {
-						return readablePercent(carbon_by_mode[d.index], total_carbon) + " carbon";
+						return readablePercent(carbon_by_mode[d.index], total_carbon) + " total carbon";
 					});
 
 			// Update carbon total
