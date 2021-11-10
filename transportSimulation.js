@@ -6,7 +6,7 @@ let width = 780,
     height = 800,
     padding = 1,
     maxRadius = 3,
-    curr_minute = 0;
+    curr_minute = -10;
 
 function scale(x) {
     return (x * 2) + 1
@@ -76,7 +76,7 @@ var carbonLegend = d3.select("#carbon").append("svg")
 
 let modeLegend = d3.select('#mode').append("svg")
     .attr("width", 300)
-    .attr("height", 300);
+    .attr("height", 320);
 
 d3.json("carbon_sim_data.json").then(function (data) {
     let sched_objs = [];
@@ -234,7 +234,7 @@ d3.json("carbon_sim_data.json").then(function (data) {
                 var text = readablePercent(purpose_counts[d.index], nodes.length);
                 // No travel-only percent on non travelling purpose
                 if (d.index != 6) {
-                    text += " (" + readablePercent(purpose_counts[d.index], total_travelling) + ")";
+                    text += " (" + readablePercent(purpose_counts[d.index], total_travelling) + " travelling)";
                 }
                 return text;
             });
@@ -249,7 +249,7 @@ d3.json("carbon_sim_data.json").then(function (data) {
             .text(function (d) {
                 var text = readablePercent(mode_counts[d.index], nodes.length);
                 if (d.desc != centrePurpose) {
-                    text += " (" + readablePercent(mode_counts[d.index], total_travelling) + ")"
+                    text += " (" + readablePercent(mode_counts[d.index], total_travelling) + " of travelling)"
                 }
                 return text;
             });
@@ -264,7 +264,8 @@ d3.json("carbon_sim_data.json").then(function (data) {
         // Sets recurring timeout
         t = d3.timeout(timer, speeds[USER_SPEED]);
     }
-    t = d3.timeout(timer, speeds[USER_SPEED]);
+    // First run of timer will allow labels to be initialised
+    t = d3.timeout(timer, 0);
 
     // Activity labels
     var label = svg.selectAll("text")
@@ -305,7 +306,7 @@ d3.json("carbon_sim_data.json").then(function (data) {
         .attr("class", "actpct")
         .text(function (d) {
             return readablePercent(purpose_counts[d.index], nodes.length) + " (" +
-                readablePercent(purpose_counts[d.index], total_travelling) + ")";
+                readablePercent(purpose_counts[d.index], total_travelling) + " of travelling)";
             //return purpose_counts[d.index] + "%";
         });
     label.append("tspan")
@@ -341,7 +342,7 @@ d3.json("carbon_sim_data.json").then(function (data) {
         .attr("class", "modepct")
         .text(function (d) {
             return readablePercent(mode_counts[d.index], nodes.length) + " (" +
-                readablePercent(mode_counts[d.index], total_travelling) + ")";
+                readablePercent(mode_counts[d.index], total_travelling) + " of travelling)";
             //return mode_counts[d.index] + "%";
         });
     modeLabel.append("tspan")
