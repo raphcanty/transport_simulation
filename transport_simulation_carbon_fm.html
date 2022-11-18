@@ -1,0 +1,27 @@
+<!DOCTYPE html lang="en">
+
+<head>
+	<title>Transport & Carbon Simulation</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="timeuse/style_fm.css" type="text/css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="timeuse/fonts.css" />
+</head>
+
+<body>
+	<div id="main-wrapper">
+		<div id="sidebar">
+			<div id="speed">
+				<div class="togglebutton slow current" data-val="slow">Slow</div>
+				<div class="togglebutton medium" data-val="medium">Medium</div>
+				<div class="togglebutton fast" data-val="fast">Fast</div>
+				<div class="clr"></div>
+			</div>
+			<div id="mode"></div>
+			<div id="carbon"></div>
+		</div>
+		<div id="current_time">4:00am</div>
+		<div id="chart"></div>
+		<div class="clr"></div>
+	</div>
+	<script src="js/package/dist/d3.js"></script>
+	<script src="transportSimulation_fm.js"></script>
